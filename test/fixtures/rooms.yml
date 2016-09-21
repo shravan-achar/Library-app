@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  capacity: 1
+  building: MyString
+  booked: false
+
+two:
+  number: 1
+  capacity: 1
+  building: MyString
+  booked: false
