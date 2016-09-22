@@ -1,28 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<% buildings = [["Hunt",0],["DH Hill",1]] %>
-<% rooms = [["Room 11",11],["Room 21",21]] %>
-<% sizes = [["Small(4)",4],["Medium(6)",6],["Large(12)",12]] %>
-<% status = [["Booked",0],["Available",1]] %>
+<% sizes = [["---",0],["Small(4)",4],["Medium(6)",6],["Large(12)",12]] %>
+<% status = [["---",0],["Available",1],["Booked",2]] %>
 
 <h1>Room Search</h1>
 
-<%= form_tag("search", method: "get") do %>
-
-    <%# Building %>
-    <%= label_tag(:building, "Building") %>
-    <%= select_tag(:building, options_for_select(buildings, buildings[0][1])) %>
+<%= form_tag("/bookings/search", method: "post") do %>
 
     <%# Rooms %>
     <%= label_tag(:room, "Room") %>
-    <%= select_tag(:room, options_for_select(rooms, rooms[0][1])) %>
+    <%= select_tag(:room, grouped_options_for_select(@rooms_array)) %>
 
     <%# Room Size %>
     <%= label_tag(:room_size, "Room Size") %>
     <%= select_tag(:room_size, options_for_select(sizes, sizes[0][1])) %>
 
     <%# Booking Status %>
-    <%= label_tag(:status, "Room Size") %>
+    <%= label_tag(:status, "Status") %>
     <%= select_tag(:status, options_for_select(status, status[0][1])) %>
 
     <%# Date %>

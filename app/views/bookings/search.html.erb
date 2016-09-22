@@ -1,0 +1,34 @@
+<html>
+<head>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<p id="notice"><%= notice %></p>
+
+
+<h1>Search Results</h1>
+
+<table style="width:100%">
+  <tr>
+    <th>Room</th>
+    <th>Building</th>
+    <th>Size</th>
+  </tr>
+  <% @search_results.each do |x| %>
+    <tr>
+      <% room = @rooms.find(x[:RoomId].to_i) %>
+      <td><%= "Room "<<room[:number].to_s %></td>
+      <td><%= room[:building]==0?"Hunt":"DH Hill" %></td>
+      <td><%= room[:capacity] %></td>
+    </tr>
+  <% end %>
+</table>
+
+</br></br>
+<%= link_to 'Back to search', bookings_url %>
+
+
+</html>

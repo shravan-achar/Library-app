@@ -1,10 +1,22 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  before_action :require_login
 
   # GET /bookings
   # GET /bookings.json
   def index
     @bookings = Booking.all
+    rooms = Room.all
+
+    @rooms_array = {"None"=>[["---", 0]],"Hunt"=>[],"DH Hill"=>[]}#To be used for selector in the view
+    rooms.each do |r|
+      r_str = "Room "<<r[:number].to_s
+      if r[:building].to_i==0
+        @rooms_array["Hunt"]<<[r_str, r[:id]]
+      else
+        @rooms_array["DH Hill"]<<[r_str, r[:id]]
+      end
+    end
   end
 
   # GET /bookings/1
@@ -62,7 +74,25 @@ class BookingsController < ApplicationController
   end
 
   def search
-    params
+    query = {}
+
+    #Room number
+    if params[:room].to_i>0
+      query[:RoomId]=params[:room].to_i
+    end
+
+    #Room Booking Status
+    if params[:status].to_i==1
+      query[:Booked]=false
+    elsif params[:status].to_i==2
+      query[:Booked]=true
+    end
+
+    #Room size
+
+    @search_results = Booking.where(query)
+    @rooms = Room.all
+    puts 'l'
   end
 
   private
@@ -74,5 +104,16 @@ class BookingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
       params.require(:booking).permit(:RoomId, :ResrvedByMember, :Member, :StartTime, :EndTime, :Booked)
+    end
+
+    def require_login
+      unless logged_in?
+        flash[:error] = "You must be logged in to access this section"
+        redirect_to new_login_url # halts request cycle
+      end
+    end
+
+    def logged_in?
+      true
     end
 end
