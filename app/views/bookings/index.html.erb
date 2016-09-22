@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<% buildings = [["Hunt",0],["DH Hill",1]] %>
+<% rooms = [["Room 11",11],["Room 21",21]] %>
+<% sizes = [["Small(4)",4],["Medium(6)",6],["Large(12)",12]] %>
+<% status = [["Booked",0],["Available",1]] %>
+
+<h1>Room Search</h1>
+
+<%= form_tag("search", method: "get") do %>
+
+    <%# Building %>
+    <%= label_tag(:building, "Building") %>
+    <%= select_tag(:building, options_for_select(buildings, buildings[0][1])) %>
+
+    <%# Rooms %>
+    <%= label_tag(:room, "Room") %>
+    <%= select_tag(:room, options_for_select(rooms, rooms[0][1])) %>
+
+    <%# Room Size %>
+    <%= label_tag(:room_size, "Room Size") %>
+    <%= select_tag(:room_size, options_for_select(sizes, sizes[0][1])) %>
+
+    <%# Booking Status %>
+    <%= label_tag(:status, "Room Size") %>
+    <%= select_tag(:status, options_for_select(status, status[0][1])) %>
+
+    <%# Date %>
+    <%= label_tag(:start_date, "Start Date") %>
+    <%= date_select :booking, :start_date %>
+
+    <%# Time %>
+    <%= label_tag(:start_time, "Start Time") %>
+    <%= time_select :booking, :start_time %>
+
+    <%= submit_tag("Search Rooms") %>
+
+<% end %>
+
+</br></br></br>
+
+
+<br>
+
+<%= link_to 'New Booking', new_booking_path %>

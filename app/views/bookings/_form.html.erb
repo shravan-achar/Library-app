@@ -1,0 +1,47 @@
+<%= form_for(booking) do |f| %>
+  <% if booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% booking.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :RoomId %>
+    <%= f.number_field :RoomId %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ResrvedByMember %>
+    <%= f.number_field :ResrvedByMember %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Member %>
+    <%= f.number_field :Member %>
+  </div>
+
+  <div class="field">
+    <%= f.label :StartTime %>
+    <%= f.datetime_select :StartTime %>
+  </div>
+
+  <div class="field">
+    <%= f.label :EndTime %>
+    <%= f.datetime_select :EndTime %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Booked %>
+    <%= f.check_box :Booked %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
