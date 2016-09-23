@@ -8,7 +8,7 @@ class BookingsController < ApplicationController
     @bookings = Booking.all
     rooms = Room.all
 
-    @rooms_array = {"None"=>[["---", 0]],"Hunt"=>[],"DH Hill"=>[]}#To be used for selector in the view
+    @rooms_array = {"None"=>[["Any", 0]],"Hunt"=>[],"DH Hill"=>[]}#To be used for selector in the view
     rooms.each do |r|
       r_str = "Room "<<r[:number].to_s
       if r[:building].to_i==0

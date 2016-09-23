@@ -1,34 +1,60 @@
 <html>
 <head>
-  <style>
-    table, th, td {
-      border: 1px solid black;
-    }
-  </style>
+
+  <title>Search Results</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <p id="notice"><%= notice %></p>
 
+<div class="container-fluid">
+  <h1>Search Results</h1>
 
-<h1>Search Results</h1>
+  <div>
+    <table style="width:100%" class="table table-hover">
+       
+      <tr>
+           
+        <th>Room</th>
+           
+        <th>Building</th>
+           
+        <th>Size</th>
 
-<table style="width:100%">
-  <tr>
-    <th>Room</th>
-    <th>Building</th>
-    <th>Size</th>
-  </tr>
-  <% @search_results.each do |x| %>
-    <tr>
-      <% room = @rooms.find(x[:RoomId].to_i) %>
-      <td><%= "Room "<<room[:number].to_s %></td>
-      <td><%= room[:building]==0?"Hunt":"DH Hill" %></td>
-      <td><%= room[:capacity] %></td>
-    </tr>
-  <% end %>
-</table>
+        <th>@</th>
+         
+      </tr>
+      <% @search_results.each do |x| %>
+          <tr>
+            <% room = @rooms.find(x[:RoomId].to_i) %>
+            <td><span data-toggle="tooltip" title="Hooray!"><%= "Room "<<room[:number].to_s %></span></td>
+            <td><%= room[:building]==0 ? "Hunt" : "DH Hill" %></td>
+            <td><%= room[:capacity] %></td>
+            <% if room[:Booked]==true %>
+              <td><button type="button" class="btn btn-danger disabled">Unavailable</button></td>
+            <% else %>
+              <td><button type="button" class="btn btn-success">Book</button></td>
+            <% end %>
+          </tr>
+      <% end %>
+    </table>
+  </div>
 
-</br></br>
-<%= link_to 'Back to search', bookings_url %>
+  </br></br>
+  <%= link_to 'Back to search', bookings_url %>
+
+</div>
+
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
 
 
 </html>
