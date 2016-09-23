@@ -53,9 +53,9 @@ class MemberTest < ActiveSupport::TestCase
     @member.save
     assert_not duplicate_member.valid?
   end
-
     test "email addresses should be saved as lower-case" do
     mixed_case_email = "Foo@ExAMPle.CoM"
+
     @member.email = mixed_case_email
     @member.save
     assert_equal mixed_case_email.downcase, @member.reload.email
