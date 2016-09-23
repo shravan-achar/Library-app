@@ -28,17 +28,12 @@
         <th>@</th>
          
       </tr>
-      <% @search_results.each do |x| %>
+      <% @search_results.each do |room| %>
           <tr>
-            <% room = @rooms.find(x[:RoomId].to_i) %>
             <td><span data-toggle="tooltip" title="Hooray!"><%= "Room "<<room[:number].to_s %></span></td>
-            <td><%= room[:building]==0 ? "Hunt" : "DH Hill" %></td>
+            <td><%= room[:building].to_i==0 ? "Hunt" : "DH Hill" %></td>
             <td><%= room[:capacity] %></td>
-            <% if room[:Booked]==true %>
-              <td><button type="button" class="btn btn-danger disabled">Unavailable</button></td>
-            <% else %>
-              <td><button type="button" class="btn btn-success">Book</button></td>
-            <% end %>
+            <td><button type="button" class="btn btn-success">Book</button></td>
           </tr>
       <% end %>
     </table>

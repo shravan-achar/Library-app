@@ -74,24 +74,32 @@ class BookingsController < ApplicationController
   end
 
   def search
-    query = {}
+
+    inner_q = "SELECT DISTINCT room_id FROM bookings WHERE"
+    outer_q = "SELECT * FROM rooms WHERE"
 
     #Room number
     if params[:room].to_i>0
-      query[:RoomId]=params[:room].to_i
+      outer_q<<" id = "<<params[:room].to_s<<" AND"
     end
 
-    #Room Booking Status
-    if params[:status].to_i==1
-      query[:Booked]=false
-    elsif params[:status].to_i==2
-      query[:Booked]=true
+    #Room number
+    if params[:room_size].to_i>0
+      outer_q<<" capacity = "<<params[:room_size].to_s<<" AND"
     end
 
-    #Room size
+    #Timing
+    booking_time = Time.parse(params[:bookingdate].to_s<<" "<<params[:bookingtime].to_s)
+    cur_time = Time.now.strftime("%Y-%m-%d %H:%M:%S")
 
-    @search_results = Booking.where(query)
-    @rooms = Room.all
+    inner_q << " (StartTime < \""<<(booking_time+2.hours).strftime("%Y-%m-%d %H:%M:%S")<<"\" AND EndTime > \""<<booking_time.strftime("%Y-%m-%d %H:%M:%S")<<"\")"
+
+    q = "SELECT * FROM rooms WHERE id NOT IN ("<<inner_q<<")"
+    outer_q<<" id NOT IN ("<<inner_q<<")"
+
+    @s3 = Booking.find_by_sql(inner_q)
+    @search_results = Booking.find_by_sql(outer_q)
+
     puts 'l'
   end
 
