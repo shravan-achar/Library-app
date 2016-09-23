@@ -1,10 +1,16 @@
+# require '../helpers/bookings_helper'
+
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
   before_action :require_login
 
+  include BookingsHelper
+
   # GET /bookings
   # GET /bookings.json
   def index
+
+
     @bookings = Booking.all
     rooms = Room.all
 
@@ -26,7 +32,8 @@ class BookingsController < ApplicationController
 
   # GET /bookings/new
   def new
-    @booking = Booking.new
+    session[:booking_time] =  params[:booking_time]
+    session[:room_id] = params[:room_id]
   end
 
   # GET /bookings/1/edit
@@ -36,7 +43,13 @@ class BookingsController < ApplicationController
   # POST /bookings
   # POST /bookings.json
   def create
-    @booking = Booking.new(booking_params)
+
+    @booking = Booking.new
+    @booking[:room_id] = session[:room_id]
+    @booking[:member_id] = getUserId
+    @booking[:Participants] = params[:participants]
+    @booking[:StartTime] = session[:booking_time]
+    @booking[:EndTime] = (Time.parse(session[:booking_time])+2.hours).strftime("%Y-%m-%d %H:%M:%S")
 
     respond_to do |format|
       if @booking.save
@@ -89,10 +102,10 @@ class BookingsController < ApplicationController
     end
 
     #Timing
-    booking_time = Time.parse(params[:bookingdate].to_s<<" "<<params[:bookingtime].to_s)
+    @booking_time = Time.parse(params[:bookingdate].to_s<<" "<<params[:bookingtime].to_s)
     cur_time = Time.now.strftime("%Y-%m-%d %H:%M:%S")
 
-    inner_q << " (StartTime < \""<<(booking_time+2.hours).strftime("%Y-%m-%d %H:%M:%S")<<"\" AND EndTime > \""<<booking_time.strftime("%Y-%m-%d %H:%M:%S")<<"\")"
+    inner_q << " (StartTime < \""<<(@booking_time+2.hours).strftime("%Y-%m-%d %H:%M:%S")<<"\" AND EndTime > \""<<@booking_time.strftime("%Y-%m-%d %H:%M:%S")<<"\")"
 
     q = "SELECT * FROM rooms WHERE id NOT IN ("<<inner_q<<")"
     outer_q<<" id NOT IN ("<<inner_q<<")"
@@ -122,6 +135,7 @@ class BookingsController < ApplicationController
     end
 
     def logged_in?
+      session[:lib_user]="m2"
       true
     end
 end

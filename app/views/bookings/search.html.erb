@@ -25,7 +25,7 @@
            
         <th>Size</th>
 
-        <th>@</th>
+        <th></th>
          
       </tr>
       <% @search_results.each do |room| %>
@@ -33,7 +33,13 @@
             <td><span data-toggle="tooltip" title="Hooray!"><%= "Room "<<room[:number].to_s %></span></td>
             <td><%= room[:building].to_i==0 ? "Hunt" : "DH Hill" %></td>
             <td><%= room[:capacity] %></td>
-            <td><button type="button" class="btn btn-success">Book</button></td>
+            <td>
+              <form action="/bookings/new" method="get">
+                <input type="hidden" name="room_id" value="<%= room[:id] %>"/>
+                <input type="hidden" name="booking_time" value="<%= @booking_time.strftime("%Y-%m-%d %H:%M:%S") %>"/>
+                <input type="submit" value="Book" class="btn btn-success"/>
+              </form>
+            </td>
           </tr>
       <% end %>
     </table>

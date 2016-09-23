@@ -1,5 +1,74 @@
-<h1>New Booking</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<%= render 'form', booking: @booking %>
+<head>
+  <title>New Booking</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<p id="notice"><%= notice %></p>
+
+<div class="container-fluid">
+
+  <h1><span class="label label-default">Add Participants</span></h1>
+  </br></br>
+
+  <%= form_tag("/bookings", method: "post") do %>
+
+      <div class="row">
+
+
+        <label class="col-sm-1 control-label  text-right">Enter Participant Email IDs</label>
+        <div class="col-sm-11">
+          <input class="form-control" id="focusedInput" type="text" name="participants" value="rob@ncsu.edu, sharon@ncsu.edu">
+        </div>
+
+      </div>
+
+      </br></br>
+
+
+      <div class="row">
+
+        <label class="col-sm-1 control-label  text-right">Booking Date and Time</label>
+        <div class="col-sm-2">
+          <input type="datetime" name="bookingdate" class="form-control" value="<%= session[:booking_time] %>" disabled>
+        </div>
+
+        <label class="col-sm-1 control-label text-right">Room</label>
+        <% r = Room.find(session[:room_id]) %>
+        <% bld = r[:building].to_i==0 ? "Hunt" : "DH Hill" %>
+        <% room = "Room "<< r[:number].to_s << " (" << bld << ")" %>
+        <div class="col-sm-2">
+          <input class="form-control"  type="text" name="room_name" value="<%= room %>" disabled>
+        </div>
+
+      </div>
+
+      </br></br>
+
+
+      <div class="row">
+        <div class="col-sm-12">
+          <input type="submit" value="Confirm Booking" class="btn btn-success center-block">
+        </div>
+
+      </div>
+
+  <% end %>
+
+  </br></br></br>
+
+
+  <br>
+
+  <%= link_to 'New Booking', new_booking_path %>
+
+</div>
+</html>
 
 <%= link_to 'Back', bookings_path %>

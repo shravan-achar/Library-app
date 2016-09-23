@@ -1,33 +1,28 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Roomid:</strong>
-  <%= @booking.RoomId %>
+  <strong>room_id:</strong>
+  <%= @booking.room_id %>
 </p>
 
 <p>
-  <strong>Resrvedbymember:</strong>
-  <%= @booking.ResrvedByMember %>
+  <strong>member_id:</strong>
+  <%= @booking.member_id %>
 </p>
 
 <p>
-  <strong>Member:</strong>
-  <%= @booking.Member %>
+  <strong>Participants:</strong>
+  <%= @booking.Participants %>
 </p>
 
 <p>
-  <strong>Starttime:</strong>
+  <strong>StartTime:</strong>
   <%= @booking.StartTime %>
 </p>
 
 <p>
-  <strong>Endtime:</strong>
+  <strong>EndTime:</strong>
   <%= @booking.EndTime %>
-</p>
-
-<p>
-  <strong>Booked:</strong>
-  <%= @booking.Booked %>
 </p>
 
 <%= link_to 'Edit', edit_booking_path(@booking) %> |
