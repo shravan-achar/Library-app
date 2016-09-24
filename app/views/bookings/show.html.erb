@@ -1,0 +1,27 @@
+<p>
+  <strong>room_id:</strong>
+  <%= @booking.room_id %>
+</p>
+
+<p>
+  <strong>member_id:</strong>
+  <%= @booking.member_id %>
+</p>
+
+<p>
+  <strong>Participants:</strong>
+  <%= @booking.Participants %>
+</p>
+
+<p>
+  <strong>StartTime:</strong>
+  <%= @booking.StartTime %>
+</p>
+
+<p>
+  <strong>EndTime:</strong>
+  <%= @booking.EndTime %>
+</p>
+
+<%= link_to 'Edit', edit_booking_path(@booking) %> |
+<%= link_to 'Back', bookings_path %>

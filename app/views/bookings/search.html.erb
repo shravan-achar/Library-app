@@ -1,0 +1,61 @@
+<html>
+<head>
+
+  <title>Search Results</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<p id="notice"><%= notice %></p>
+
+<div class="container-fluid">
+  <h1><span class="label label-default">Search Results</span></h1>
+
+  <div>
+    <table style="width:100%" class="table table-hover">
+       
+      <tr>
+           
+        <th>Room</th>
+           
+        <th>Building</th>
+           
+        <th>Size</th>
+
+        <th></th>
+         
+      </tr>
+      <% @search_results.each do |room| %>
+          <tr>
+            <td><span data-toggle="tooltip" title="Hooray!"><%= "Room "<<room[:number].to_s %></span></td>
+            <td><%= room[:building].to_i==0 ? "Hunt" : "DH Hill" %></td>
+            <td><%= room[:capacity] %></td>
+            <td>
+              <form action="/bookings/new" method="get">
+                <input type="hidden" name="room_id" value="<%= room[:id] %>"/>
+                <input type="hidden" name="booking_time" value="<%= @booking_time.strftime("%Y-%m-%d %H:%M:%S") %>"/>
+                <input type="submit" value="Book" class="btn btn-success"/>
+              </form>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+
+  </br></br>
+  <%= link_to 'Back to search', bookings_url %>
+
+</div>
+
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+
+</html>

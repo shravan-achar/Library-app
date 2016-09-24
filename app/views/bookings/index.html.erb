@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Room Search</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<% sizes = [["Any",0],["Small(4)",4],["Medium(6)",6],["Large(12)",12]] %>
+<% status = [["Any",0],["Available",1],["Booked",2]] %>
+
+<div class="container-fluid">
+
+  <h1><span class="label label-default">Room Search</span></h1>
+  </br></br>
+
+  <%= form_tag("/bookings/search", method: "post") do %>
+
+      <div class="row">
+
+        <%# Rooms %>
+        <div class="col-sm-2">
+          <%= label_tag(:room, "Room") %>
+          <%= select_tag(:room, grouped_options_for_select(@rooms_array),:class=>"form-control") %>
+        </div>
+
+        <%# Room Size %>
+        <div class="col-sm-2">
+          <%= label_tag(:room_size, "Room Size") %>
+          <%= select_tag(:room_size, options_for_select(sizes, sizes[0][1]),:class=>"form-control") %>
+        </div>
+
+        <%# Booking Status %>
+        <div class="col-sm-2">
+          <%= label_tag(:status, "Status") %>
+          <%= select_tag(:status, options_for_select(status, status[0][1]),:class=>"form-control") %>
+        </div>
+
+        <%# Date %>
+        <div class="col-sm-2">
+          <%= label_tag(:start_date, "Start Date") %>
+          <input type="date" name="bookingdate" class="form-control" value="<%= Date.today.to_s %>">
+        </div>
+
+        <%# Time %>
+        <div class="col-sm-2">
+          <%= label_tag(:start_time, "Start Time") %>,
+          <input type="time" class="form-control" name="bookingtime" value="<%= Time.now.strftime("%H:%M") %>">
+        </div>
+
+      </div>
+
+      </br></br>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <input type="submit" value="Search" class="btn btn-primary center-block">
+        </div>
+
+        <div class="col-sm-6">
+          <input type="submit" value="Quick Book" class="btn btn-success center-block">
+        </div>
+      </div>
+
+
+
+  <% end %>
+
+  </br></br></br>
+
+
+  <br>
+
+  <%= link_to 'New Booking', new_booking_path %>
+
+</div>
+</html>

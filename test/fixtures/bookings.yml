@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  RoomId: 1
+  ResrvedByMember: 1
+  Member: 1
+  StartTime: 2016-09-22 00:10:06
+  EndTime: 2016-09-22 00:10:06
+  Booked: false
+
+two:
+  RoomId: 1
+  ResrvedByMember: 1
+  Member: 1
+  StartTime: 2016-09-22 00:10:06
+  EndTime: 2016-09-22 00:10:06
+  Booked: false

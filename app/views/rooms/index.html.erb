@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rooms</h1>
+<div class = "container">
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+      <th> Room </th>
+      <th> Capacity </th>
+      <th> Building </th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rooms.each do |room| %>
+      <tr>
+        <td colspan="3"></td>
+        <td align="center"><%= room.number %></td>
+        <td align="center"><%= room.capacity %></td>
+        <td align="center"><%= room.building %></td>
+        <td><%= button_to 'Delete', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Add new Room', new_room_path %>
+</div>
