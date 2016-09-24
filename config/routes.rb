@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+
+  root 'homepage#home'
+
+  get 'homepage/contact'
+  get 'homepage/about'
+  get '/home', to: 'homepage#home'
+
+  get '/signup', to:'members#new'
+  post '/signup', to:'members#create'
+
+  get    '/login',   to: 'sessions#new'
+  post   '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy'
+
+
   get 'admins/options', :to => 'admins#options'
   resources :admins
   post 'bookings/search', :to => 'bookings#search'

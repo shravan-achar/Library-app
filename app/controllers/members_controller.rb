@@ -1,6 +1,12 @@
 class MembersController < ApplicationController
+
   before_action :set_member, only: [:show, :edit, :update, :destroy]
   before_action :require_login
+
+  def show
+  	@member = Member.find(params[:id])
+  end
+  
 
   # GET /members
   # GET /members.json
@@ -22,6 +28,7 @@ class MembersController < ApplicationController
 
   # GET /members/new
   def new
+  	@member = Member.new
   end
 
   # GET /members/1/edit
@@ -35,8 +42,10 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        format.html { redirect_to bookings_makebooking_url, notice: 'Member was successfully created.' }
+      	flash[:success] = "Welcome to the Library App!"
+	format.html { redirect_to bookings_makebooking_url, notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: @member }
+
       else
         format.html { render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
@@ -85,8 +94,9 @@ class MembersController < ApplicationController
     end
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def member_params
-      params.fetch(:member, {})
-    end
+  def member_params
+      params.require(:member).permit(:name, :email, :password, :password_confirmation)
+
+      #params.require(:member).permit(:name, :email, :password, :password_confirmation)
+  end
 end

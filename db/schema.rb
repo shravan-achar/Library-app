@@ -33,13 +33,12 @@ ActiveRecord::Schema.define(version: 20160923162644) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.string   "email"
-    t.string   "password"
     t.string   "name"
-    t.text     "history"
-    t.text     "notification"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "email"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
+    t.index ["email"], name: "index_members_on_email", unique: true
   end
 
   create_table "rooms", force: :cascade do |t|
