@@ -3,16 +3,27 @@ class SessionsController < ApplicationController
   end
 
   def create
-  	member = Member.find_by(email: params[:session][:email].downcase)
-  	if member && member.authenticate(params[:session][:password])
-  		log_in member
-      flash.now[:success] = "Welcome to the Library App!"
-      redirect_to bookings_makebooking_url
-  		#redirect_to member
-  	else
-  		#show error message and redirect to the login page again
-  		flash.now[:danger] = 'Invalid email/password combination'
-  	    render 'new'
+
+    if params[:session][:admin].to_i==1
+      admin = Admin.find_by(email: params[:session][:email].downcase)
+      if admin && admin.authenticate(params[:session][:password])
+        admin_log_in admin
+        redirect_to admins_options_url, :notice=>"Admin Successfully logged in"
+      else
+        #show error message and redirect to the login page again
+        flash.now[:danger] = 'Invalid email/password combination'
+        render 'new'
+      end
+    else
+      member = Member.find_by(email: params[:session][:email].downcase)
+      if member && member.authenticate(params[:session][:password])
+        log_in member
+        redirect_to bookings_makebooking_url, :notice=>"Member Successfully logged in"
+      else
+        #show error message and redirect to the login page again
+        flash.now[:danger] = 'Invalid email/password combination'
+          render 'new'
+      end
     end
   end
 
