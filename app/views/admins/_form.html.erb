@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<%= form_for(admin) do |f| %>
+  <% if admin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin.errors.count, "error") %> prohibited this admin from being saved:</h2>
+
+      <ul>
+      <% admin.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <form class="form-inline">
+    <!--<div class="form-group">-->
+      <!--<label for="usr">Name</label>-->
+      <!--<input type="text" class="form-control" id="usr">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<label for="email">Email</label>-->
+      <!--<input type="text" class="form-control" id="email">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<label for="pwd">Password</label>-->
+      <!--<input type="text" class="form-control" id="pwd">-->
+    <!--</div>-->
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <br>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+      <br>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+      <br>
+    </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</form>
+
+
+
+
+<% end %>

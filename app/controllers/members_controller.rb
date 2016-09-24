@@ -1,0 +1,85 @@
+class MembersController < ApplicationController
+  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :require_login
+
+  # GET /members
+  # GET /members.json
+  def index
+    redirect_to controller: 'bookings', action: 'index'
+  end
+
+  # GET /members/1
+  # GET /members/1.json
+  def show
+  end
+
+  # GET /members/new
+  def new
+  end
+
+  # GET /members/1/edit
+  def edit
+  end
+
+  # POST /members
+  # POST /members.json
+  def create
+    @member = Member.new(member_params)
+
+    respond_to do |format|
+      if @member.save
+        format.html { redirect_to bookings_url, notice: 'Member was successfully created.' }
+        format.json { render :show, status: :created, location: @member }
+      else
+        format.html { render :new }
+        format.json { render json: @member.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /members/1
+  # PATCH/PUT /members/1.json
+  def update
+    respond_to do |format|
+      if @member.update(member_params)
+        format.html { redirect_to bookings_url, notice: 'Member was successfully updated.' }
+        format.json { render :show, status: :ok, location: @member }
+      else
+        format.html { render :edit }
+        format.json { render json: @member.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /members/1
+  # DELETE /members/1.json
+  def destroy
+    @member.destroy
+    respond_to do |format|
+      # Upon successful deletion redirect to login_page
+      format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_member
+      @member = Member.find(params[:id])
+    end
+
+  def logged_in?
+    return true #Replace this with session variable
+  end
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to new_login_url # halts request cycle
+    end
+  end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def member_params
+      params.fetch(:member, {})
+    end
+end

@@ -6,8 +6,8 @@ class CreateBookings < ActiveRecord::Migration[5.0]
       t.datetime :EndTime
       t.boolean :Booked
 
-      t.belongs_to :room, index: true
       t.belongs_to :member, index: true
+      t.belongs_to :room, index: true
 
       t.timestamps
     end

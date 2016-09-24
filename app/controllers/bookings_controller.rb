@@ -186,7 +186,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:RoomId, :ResrvedByMember, :Member, :StartTime, :EndTime, :Booked)
+      params.require(:booking).permit(:RoomId, :participant, :Member, :StartTime, :EndTime, :Booked)
     end
 
     def require_login
