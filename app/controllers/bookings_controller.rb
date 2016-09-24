@@ -197,7 +197,7 @@ end
     end
 
     def logged_in?
-      session[:lib_user]="a2"
+      session[:lib_user]="m2"
       true
     end
 

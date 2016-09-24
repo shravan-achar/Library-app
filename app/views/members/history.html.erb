@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class = "container">
+  <h1 align="center">Booking History</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th colspan="3"></th>
+      <td>Room</td>
+      <td>Start time</td>
+      <td>End time</td>
+      <td>Participants</td>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @booking_list.each do |booking| %>
+        <tr>
+          <th colspan="3"></th>
+          <td align="center"><%= booking.room_id %></td>
+          <td align = "center"><%= booking.StartTime %></td>
+          <td align = "center"><%= booking.EndTime %></td>
+          <td align = "center"><%= booking.Participants %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<br> <br>
