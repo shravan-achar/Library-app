@@ -6,7 +6,9 @@ class SessionsController < ApplicationController
   	member = Member.find_by(email: params[:session][:email].downcase)
   	if member && member.authenticate(params[:session][:password])
   		log_in member
-  		redirect_to member
+      flash.now[:success] = "Welcome to the Library App!"
+      redirect_to bookings_makebooking_url
+  		#redirect_to member
   	else
   		#show error message and redirect to the login page again
   		flash.now[:danger] = 'Invalid email/password combination'
