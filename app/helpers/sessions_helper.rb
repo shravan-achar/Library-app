@@ -1,20 +1,26 @@
 module SessionsHelper
 	# Logs in the given member.
   def log_in(member)
-    session[:member_id] = member.id
+    session[:lib_user] = "m"+member.id.to_s
+  end
+
+  def admin_log_in(admin)
+    session[:lib_user] = "a"+admin.id.to_s
   end
 
   # Returns the current logged-in member (if any).
   def current_member
-    @current_member ||= Member.find_by(id: session[:member_id])
+    mem_id =
+    @current_member ||= Member.find_by(id: session[:libe])
   end
 
   def logged_in?
-    !current_member.nil?
+    session.key?(:lib_user)
+    # !current_member.nil?
   end
 
   def log_out
-    session.delete(:member_id)
-    @current_member = nil
+    session.delete(:lib_user)
+    # @current_member = nil
   end
 end
