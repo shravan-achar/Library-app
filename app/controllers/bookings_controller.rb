@@ -197,6 +197,10 @@ end
     end
 
     def invite_participants
+      if(@booking[:Participants]==nil)
+        return
+      end
+
       participants = @booking[:Participants].split(%r{,\s*})
       organizer = Member.find(@booking[:member_id])[:name]
       r = Room.find(@booking[:room_id])
