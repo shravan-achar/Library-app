@@ -9,6 +9,15 @@
   </head>
 
   <body>
+    <% if notice!="" && defined? notice %>
+      <div class="container">
+      <div class="alert alert-info fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p id="notice"><%= notice %></p>
+      </div>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

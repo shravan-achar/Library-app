@@ -1,7 +1,7 @@
 # require '../helpers/bookings_helper'
 
 class BookingsController < ApplicationController
-  before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  # before_action :set_booking, only: [:show, :edit, :update, :destroy]
   before_action :require_login
 
   include BookingsHelper
@@ -46,15 +46,21 @@ class BookingsController < ApplicationController
 
     @booking = Booking.new
     @booking[:room_id] = session[:room_id]
-    @booking[:member_id] = getUserId
     @booking[:Participants] = params[:participants]
     @booking[:StartTime] = session[:booking_time]
     @booking[:EndTime] = (Time.parse(session[:booking_time])+2.hours).strftime("%Y-%m-%d %H:%M:%S")
 
+    if isAdmin
+      @booking[:member_id] = Member.where(:email=>params[:organizer].strip)[0][:id]
+    else
+      @booking[:member_id] = getUserId
+    end
+
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+        format.html { redirect_to bookings_url, notice: '<strong>Success!</strong> Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
+        invite_participants
       else
         format.html { render :new }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
@@ -116,6 +122,62 @@ class BookingsController < ApplicationController
     puts 'l'
   end
 
+
+  def makebooking
+    return
+end
+
+  def quickbook
+    inner_q = "SELECT DISTINCT room_id FROM bookings WHERE"
+    outer_q = "SELECT * FROM rooms WHERE"
+
+    #Room number
+    if params[:room_id].to_i>0
+      outer_q<<" id = "<<params[:room_id].to_s<<" AND"
+    end
+
+    #Timing
+    @booking_time = Time.parse(params[:booking_date].to_s<<" "<<params[:booking_time].to_s)
+    cur_time = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+
+    inner_q << " (StartTime < \""<<(@booking_time+2.hours).strftime("%Y-%m-%d %H:%M:%S")<<"\" AND EndTime > \""<<@booking_time.strftime("%Y-%m-%d %H:%M:%S")<<"\")"
+
+    q = "SELECT * FROM rooms WHERE id NOT IN ("<<inner_q<<")"
+    outer_q<<" id NOT IN ("<<inner_q<<")"
+
+    @s3 = Booking.find_by_sql(inner_q)
+    @search_results = Booking.find_by_sql(outer_q)
+
+    if(@search_results.size!=1)
+      redirect_to bookings_makebooking_url, notice: "No slots available. Please use search"
+      return
+    end
+
+    #Add to database
+    @booking = Booking.new
+    @booking[:room_id] = params[:room_id]
+    @booking[:Participants] = params[:participants]
+    @booking[:StartTime] = @booking_time.strftime("%Y-%m-%d %H:%M:%S")
+    @booking[:EndTime] = (@booking_time+2.hours).strftime("%Y-%m-%d %H:%M:%S")
+
+    if isAdmin
+      @booking[:member_id] = Member.where(:email=>params[:organizer].strip)[0][:id]
+    else
+      @booking[:member_id] = getUserId
+    end
+
+    invite_participants
+
+    if @booking.save
+      redirect_to bookings_makebooking_url, notice: 'Booking was successfully created.'
+    else
+      format.html { render :new }
+      format.json { render json: @booking.errors, status: :unprocessable_entity }
+    end
+
+    puts 'l'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_booking
@@ -135,7 +197,28 @@ class BookingsController < ApplicationController
     end
 
     def logged_in?
-      session[:lib_user]="m2"
+      session[:lib_user]="a2"
       true
     end
+
+    def invite_participants
+      participants = @booking[:Participants].split(%r{,\s*})
+      organizer = Member.find(@booking[:member_id])[:name]
+      r = Room.find(@booking[:room_id])
+      bld = r[:building].to_i==0 ? "Hunt" : "DH Hill"
+      room = "Room "<< r[:number].to_s << " (" << bld << ")"
+
+      participants.each do |p|
+        p=p.strip
+        m = Member.where(:email=>p)
+
+        if(m.size>0)
+          m=m[0]
+          msg = "You have been invited by "<<organizer<<" for a meeting in "<<room<<" at "<<@booking[:StartTime].to_s
+          m[:notification]= msg
+          m.save
+        end
+      end
+    end
+
 end

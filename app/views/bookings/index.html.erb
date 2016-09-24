@@ -10,8 +10,6 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<p id="notice"><%= notice %></p>
-
 <% sizes = [["Any",0],["Small(4)",4],["Medium(6)",6],["Large(12)",12]] %>
 <% status = [["Any",0],["Available",1],["Booked",2]] %>
 
@@ -59,11 +57,16 @@
       </br></br>
 
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
           <input type="submit" value="Search" class="btn btn-primary center-block">
         </div>
 
+        <div class="col-sm-6">
+          <input type="submit" value="Quick Book" class="btn btn-success center-block">
+        </div>
       </div>
+
+
 
   <% end %>
 

@@ -1,6 +1,6 @@
 module BookingsHelper
   def isAdmin
-    if not session[:lib_user].defined?
+    if not session.key? :lib_user
       return false
     end
 

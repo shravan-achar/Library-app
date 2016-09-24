@@ -10,7 +10,7 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<p id="notice"><%= notice %></p>
+
 
 <div class="container-fluid">
 
@@ -19,11 +19,23 @@
 
   <%= form_tag("/bookings", method: "post") do %>
 
+      <% if isAdmin %>
+        <div class="row">
+
+          <label class="col-sm-2 control-label  text-right">Enter Organizer's Email ID</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="focusedInput" type="text" name="organizer" value="sam@ncsu.edu">
+          </div>
+
+        </div>
+        </br></br>
+      <% end %>
+
+
       <div class="row">
 
-
-        <label class="col-sm-1 control-label  text-right">Enter Participant Email IDs</label>
-        <div class="col-sm-11">
+        <label class="col-sm-2 control-label  text-right">Enter Participants' Email IDs (optional)</label>
+        <div class="col-sm-10">
           <input class="form-control" id="focusedInput" type="text" name="participants" value="rob@ncsu.edu, sharon@ncsu.edu">
         </div>
 
