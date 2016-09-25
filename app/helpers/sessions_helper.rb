@@ -29,7 +29,18 @@ module SessionsHelper
     else
       return false
     end
+  end
 
+  def member_logged_in?
+    if (session.key? :lib_user)
+      if (session[:lib_user][0] == 'm')
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
   end
 
   def log_out

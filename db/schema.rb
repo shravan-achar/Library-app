@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(version: 20160925015600) do
   end
 
   create_table "bookings", force: :cascade do |t|
-    t.string   "Participants"
+    t.integer  "Participants"
     t.datetime "StartTime"
     t.datetime "EndTime"
+    t.boolean  "Booked"
     t.integer  "member_id"
     t.integer  "room_id"
     t.datetime "created_at",   null: false
