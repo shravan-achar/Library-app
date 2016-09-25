@@ -24,6 +24,9 @@
             <% if logged_in? %>
             <li><%= link_to "Make a booking", bookings_makebooking_url%></li>
             <% end %>
+            <% if admin_logged_in? %>
+                <li><%= link_to "Menu", admins_options_url %></li>
+                <% end %>
             <% if !logged_in? %>
               <li><%= link_to "Log in", login_path %></li>
               <li><%= link_to "Sign up",   signup_path %></li>

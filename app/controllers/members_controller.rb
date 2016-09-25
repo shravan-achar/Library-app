@@ -19,7 +19,8 @@ class MembersController < ApplicationController
   end
 
   def history
-    @booking_list = @member.bookings
+    @member = Member.find(params[:id])
+    @bookings_list = @member.bookings
   end
   # GET /members/1
   # GET /members/1.json
@@ -84,9 +85,6 @@ class MembersController < ApplicationController
       @member = Member.find(params[:id])
     end
 
-  def logged_in?
-    return true #Replace this with session variable
-  end
   def require_login
     unless logged_in?
       flash[:error] = "You must be logged in to access this section"
