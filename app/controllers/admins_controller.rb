@@ -83,10 +83,6 @@ class AdminsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def logged_in?
-      return true
-    end
-
     def set_admin
       @admin = Admin.find(params[:id])
     end
@@ -97,9 +93,9 @@ class AdminsController < ApplicationController
     end
 
     def require_login
-      unless logged_in?
-        flash[:error] = "You must be logged in to access this section"
-      redirect_to new_login_url # halts request cycle
+      unless admin_logged_in?
+        flash[:error] = "You must be logged in as admin"
+      redirect_to login_path # halts request cycle
     end
   end
 end

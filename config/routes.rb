@@ -24,11 +24,14 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get 'members/showall', :to => 'members#showall'
-  get 'members/history', :to => 'members#history'
-  resources :members
-
 
   resources :rooms do
+    member do
+      get 'history'
+    end
+  end
+
+  resources :members do
     member do
       get 'history'
     end

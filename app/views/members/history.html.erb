@@ -19,16 +19,17 @@
     </thead>
 
     <tbody>
-    <% @booking_list.each do |booking| %>
+    <% @bookings_list.each do |booking| %>
         <tr>
           <th colspan="3"></th>
-          <td align="center"><%= booking.room_id %></td>
-          <td align = "center"><%= booking.StartTime %></td>
-          <td align = "center"><%= booking.EndTime %></td>
-          <td align = "center"><%= booking.Participants %></td>
+          <td align><%= booking.room_id %></td>
+          <td align><%= booking.StartTime %></td>
+          <td align><%= booking.EndTime %></td>
+          <td align><%= booking.Participants %></td>
         </tr>
     <% end %>
     </tbody>
   </table>
+  <h4><%= link_to 'Back', members_showall_url %></h4>
 </div>
 <br> <br>
