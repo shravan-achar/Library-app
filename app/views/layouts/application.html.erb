@@ -10,21 +10,6 @@
     <%= stylesheet_link_tag    'default', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'default', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-
-    <style>
-      #logout_button {
-        background-color: #000000;
-        border: none;
-        color: #9d9d9d;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-      }
-    </style>
   </head>
 
   <body>
@@ -51,6 +36,15 @@
           <% end %>
           </ul>
         </nav>
+
+        <nav>
+          <ul class="nav navbar-nav navbar-left">
+            <% if logged_in? %>
+                <li><%= link_to "Room Search", bookings_url%></li>
+            <% end %>
+          </ul>
+        </nav>
+
       </div>
     </header>
   <div class="container" style="text-align: right; " >
@@ -60,7 +54,7 @@
   </div>
     <div class="container">
      <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <div class="alert alert-info"><%= message %></div>
       <% end %>
       <%= yield %>
     </div>

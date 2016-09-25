@@ -22,12 +22,14 @@
         <td align="center"><%= room.capacity %></td>
         <td align="center"><%= room.building %></td>
         <td><%= button_to 'Delete', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'View Schedule',history_room_path(room), method: :get %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'Add new Room', new_room_path %>
+<% if admin_logged_in? %>
+  <%= link_to 'Add new Room', new_room_path %>
+<% end %>
 </div>
