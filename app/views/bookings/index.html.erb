@@ -13,6 +13,8 @@
 <% sizes = [["Any",0],["Small(4)",4],["Medium(6)",6],["Large(12)",12]] %>
 <% status = [["Any",0],["Available",1],["Booked",2]] %>
 
+<% provide(:title, "Room Search") %>
+
 <div class="container-fluid">
 
   <h1><span class="label label-default">Room Search</span></h1>
@@ -57,13 +59,10 @@
       </br></br>
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <input type="submit" value="Search" class="btn btn-primary center-block">
         </div>
 
-        <div class="col-sm-6">
-          <input type="submit" value="Quick Book" class="btn btn-success center-block">
-        </div>
       </div>
 
 

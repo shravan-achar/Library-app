@@ -38,6 +38,24 @@ class BookingsController < ApplicationController
 
   # GET /bookings/1/edit
   def edit
+    b = Booking.find(params[:id])
+    cur_time = Time.now
+    end_time = Time.parse(b[:EndTime].strftime("%Y-%m-%d %H:%M:%S"))
+    start_time = Time.parse(b[:StartTime].strftime("%Y-%m-%d %H:%M:%S"))
+    msg = ""
+
+    if(start_time<cur_time && cur_time<=end_time)
+      b[:EndTime]=cur_time.strftime("%Y-%m-%d %H:%M:%S")
+      b.save
+      msg="Session ended"
+    end
+
+    if cur_time<start_time
+      b.destroy
+      msg="Successfully cancelled booking"
+    end
+
+    redirect_to(history_room_path(Room.find(b.room_id)), method: "get", notice: msg)
   end
 
   # POST /bookings
@@ -58,7 +76,7 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to bookings_url, notice: '<strong>Success!</strong> Booking was successfully created.' }
+        format.html { redirect_to bookings_url, notice: 'Success! Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
         invite_participants
       else

@@ -1,0 +1,65 @@
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<% provide(:title, "Room Schedule") %>
+
+<div class="container-fluid">
+  <h1><span class="label label-default">Room Schedule</span></h1>
+
+  <div>
+    <table style="width:100%" class="table table-hover">
+       
+      <tr>
+           
+        <th>Booked by</th>
+           
+        <th>Start Time</th>
+           
+        <th>End Time</th>
+
+        <th></th>
+         
+      </tr>
+      <% @future_bookings.each do |booking| %>
+          <tr>
+            <% room = Room.find(booking[:room_id]) %>
+
+            <td><%= Member.find(booking[:member_id].to_i)[:name] %></td>
+
+            <td><%= booking[:StartTime] %></td>
+
+            <td><%= booking[:EndTime] %></td>
+            <td>
+              <%= form_tag(edit_booking_path(booking), method: "get") do %>
+              <!--<form action="/bookings/edit" method="get">-->
+                <input type="hidden" name="room_id" value="<%= booking[:room_id] %>"/>
+                <input type="submit" value="Cancel Booking" class="btn btn-danger"/>
+              <!--</form>-->
+              <% end  %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+
+  </br></br>
+  <%= link_to 'Back to search', bookings_url %>
+
+</div>
+
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+
+</html>

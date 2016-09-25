@@ -61,6 +61,14 @@ class RoomsController < ApplicationController
     end
   end
 
+  def history
+    cur_time = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    @room = Room.find(params[:id].to_i)
+
+    @future_bookings = @room.bookings.where("EndTime>\""<<cur_time<<"\"")
+    puts "l"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_room
