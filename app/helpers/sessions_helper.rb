@@ -19,6 +19,19 @@ module SessionsHelper
     # !current_member.nil?
   end
 
+  def admin_logged_in?
+    if (session.key? :lib_user)
+      if (session[:lib_user][0] == 'a')
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+
+  end
+
   def log_out
     session.delete(:lib_user)
     # @current_member = nil
