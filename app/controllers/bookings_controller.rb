@@ -233,7 +233,8 @@ end
           m=m[0]
           msg = "You have been invited by "<<organizer<<" for a meeting in "<<room<<" at "<<@booking[:StartTime].to_s
           m[:notification]= msg
-          m.save
+          str = "UPDATE Members SET notification="+"'" +  msg.to_s + "'"+" WHERE id=" + m.id.to_s
+          a = Member.find_by_sql(str)
         end
       end
     end

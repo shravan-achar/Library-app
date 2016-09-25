@@ -64,5 +64,18 @@
       <% end %>
       <%= yield %>
     </div>
+  <div class="container">
+    <% if logged_in? %>
+    <% ide = session[:lib_user][1..-1] %>
+        <% mem = Member.find(ide) %>
+        <% if (!mem[:notification].nil?) %>
+        <%= mem[:notification].to_s %>
+            <% mem[:notification] = nil %>
+            <% str = "UPDATE Members SET notification="+"'" + "'"+" WHERE id=" + mem.id.to_s %>
+            <% Member.find_by_sql(str) %>
+            <% end%>
+        <%end%>
+  </div>
+
   </body>
 </html>

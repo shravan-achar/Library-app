@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
 
   before_action :set_member, only: [:show, :edit, :update, :destroy]
-  before_action :require_login
+  before_action :require_login, except: [:new, :create]
 
   def show
   	@member = Member.find(params[:id])
@@ -44,7 +44,8 @@ class MembersController < ApplicationController
     respond_to do |format|
       if @member.save
       	flash[:success] = "Welcome to the Library App!"
-	format.html { redirect_to bookings_makebooking_url, notice: 'Member was successfully created.' }
+        log_in(@member)
+        format.html { redirect_to bookings_makebooking_url, notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: @member }
 
       else
@@ -88,7 +89,7 @@ class MembersController < ApplicationController
   def require_login
     unless logged_in?
       flash[:error] = "You must be logged in to access this section"
-      redirect_to new_login_url # halts request cycle
+      redirect_to login_path # halts request cycle
     end
   end
 
