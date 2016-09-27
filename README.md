@@ -8,3 +8,7 @@ Make Booking: Allows to quickly book a room by specifying the room number and ti
 Room Search: Search results based on parameters like room number, location, time, size can be retrieved.
 
 All other features are self-explanatory
+
+When an admit deletes a room all the history associated with that room is deleted. So the user history doesn't contain the data of that room anymore.
+
+When memeber is deleted by the admin, his bookings are deleted. Other members will be able to use the slots alloted to him.
