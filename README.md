@@ -16,7 +16,7 @@ Upon opening the first time, use Login/Signup options available at the bottom of
 Admin signup is not available as only another admin can add a new admin
 Library members can register themselves by using the Signup options
 
-Make a Booking:
+Booking:
 When you login as a member, you will be directed to "Make a Booking" page where u can enter the date, time and room number.
 If a slot is available for the requested time, you will be asked to add organizer's mail id (only for admin mode) and the participants email IDs (admin and member mode)
 If no slots are available, then you will be displayed an error message suggesting to use "Room Search" instead
