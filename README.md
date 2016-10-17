@@ -1,3 +1,5 @@
+The application is hosted at https://my-library-assisstant.herokuapp.com/
+
 Admin Credentials: Username: admin@ncsu.edu Password: admin123
 
 Rooms can be booked using "Make Booking" and "Book Search" options present at the bottom of the screen.
